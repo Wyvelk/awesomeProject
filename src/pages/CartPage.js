@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, FlatList, Image, StyleSheet } from 'react-native';
 import { useCart } from '../components/CartContext';
 
-const CartPage = () => {
+const CartPage = ({navigation}) => {
     const { cartItems, addItemToCart, removeItemFromCart,clearCart } = useCart();
 
     const calculateTotalPrice = () => {
@@ -17,9 +17,9 @@ const CartPage = () => {
         <View style={styles.item}>
             <View style={styles.card}>
 
-                <View style={styles.imageContainer}>
+                <TouchableOpacity style={styles.imageContainer} onPress={()=>navigation.navigate('DetailProductPage', {product:item})}>
                     <Image style={styles.image} source={{ uri: item.image }} resizeMode="contain" />
-                </View>
+                </TouchableOpacity>
                 <Text style={styles.titleCart}>{item.title}</Text>
                 <Text>total: {(item.price * item.quantity).toFixed(2)}€ (unit: {item.price}€)</Text>
                 <View style={styles.quantityControls}>
@@ -41,6 +41,7 @@ const CartPage = () => {
                 <Text style={styles.title}>Cart is empty</Text>
             ) : (
                 <FlatList
+
                     data={cartItems}
                     renderItem={renderCartItem}
                     keyExtractor={(item) => item.id.toString()}

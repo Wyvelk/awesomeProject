@@ -42,7 +42,9 @@ const App = () => {
                     <Stack.Screen
                         name="CartPage"
                         component={CartPage}
-                        options={{ title: 'Cart' }}
+                        options={(navigation)=>{
+                           return  { title: 'Cart',navigation }
+                        }}
                     />
                 </Stack.Navigator>
             </NavigationContainer>
